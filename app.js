@@ -1,14 +1,11 @@
 const express = require("express")
+const path = require('path');
 const app = express()
 
 const cors=require ('cors')
 const dotenv = require('dotenv');
 dotenv.config()
 
-app.get("/",(req,res)=>{
-    res.send("page accueil")
-}
-)
 
 const mongoose = require('mongoose');
 
@@ -33,12 +30,11 @@ mongoose.connect(process.env.DATABASECLOUD)
 process.exit(); });
 
 
-app.get("/accueil", (req, res) => {
-    res.send("page daccueil")
-}
-)
-
 app.use("/api/categories",categorieRouter);
+
+app.use(express.static(path.join(__dirname, './client/build')));
+app.get('*', (req, res) => { res.sendFile(path.join(__dirname,
+'./client/build/index.html')); });
 app.listen(process.env.PORT, () => {
     console.log(`Server de Gigi Haf is listening on port ${process.env.PORT}`);
 });
