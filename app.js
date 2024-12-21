@@ -13,7 +13,8 @@ const categorieRouter =require("./routes/categorie.route")
 //BodyParser Middleware
 app.use(express.json());
 app.use(cors())
-
+const paymentStripeRouter =require("./routes/paymentStripe.route.js");
+app.use('/api/paymentStripe', paymentStripeRouter);
 const scategorieRouter =require("./routes/scategorie.route")
 app.use('/api/scategories', scategorieRouter);
 
@@ -24,7 +25,7 @@ app.use('/api/articles', articleRouter);
 
 // Connexion à la base données
 //mongoose.connect(process.env.DATABASE)
-mongoose.connect(process.env.DATABASECLOUD)
+mongoose.connect(process.env.DATABASE)
 .then(() => {console.log("DataBase Successfully Connected");})
 .catch(err => { console.log("Unable to connect to database", err);
 process.exit(); });
